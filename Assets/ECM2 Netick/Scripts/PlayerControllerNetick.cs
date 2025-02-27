@@ -14,6 +14,7 @@ public class PlayerControllerNetick : NetworkBehaviour
 
     public struct ECM2Data
     {
+        //Position and Rotation removed here because we are using NetworkTransform to sync these instead.
         //public Vector3 Position;
         //public Quaternion Rotation;
         public Vector3 Velocity;
@@ -22,8 +23,8 @@ public class PlayerControllerNetick : NetworkBehaviour
         public bool HitGround;
         public bool IsWalkable;
 
-        public ECM2Data(Vector3 position, Quaternion rotation, Vector3 velocity, bool constrainedToGround,
-                float unconstrainedTime, bool hitGround, bool isWalkable)
+        //public ECM2Data(Vector3 position, Quaternion rotation, Vector3 velocity, bool constrainedToGround, float unconstrainedTime, bool hitGround, bool isWalkable)
+        public ECM2Data(Vector3 velocity, bool constrainedToGround, float unconstrainedTime, bool hitGround, bool isWalkable)
         {
             //this.Position = position;
             //this.Rotation = rotation;
@@ -41,7 +42,6 @@ public class PlayerControllerNetick : NetworkBehaviour
     [Networked] public ECM2Data Data { get; set; }
 
     #region EDITOR EXPOSED FIELDS
-
     public float rotationRate = 540.0f;
 
     public float maxSpeed = 5;
@@ -58,7 +58,6 @@ public class PlayerControllerNetick : NetworkBehaviour
     public float airControl = 0.3f;
 
     public Vector3 gravity = Vector3.down * 9.81f;
-
     #endregion
 
     private CharacterMovementNetick characterMovement { get; set; }
@@ -114,7 +113,6 @@ public class PlayerControllerNetick : NetworkBehaviour
             // Movement
             moveDirection = Vector3.right * md.horizontal + Vector3.forward * md.vertical;
             moveDirection = Vector3.ClampMagnitude(moveDirection, 1.0f);
-
             desiredVelocity = moveDirection * maxSpeed;
         }
 
@@ -139,8 +137,6 @@ public class PlayerControllerNetick : NetworkBehaviour
     public override void GameEngineIntoNetcode()
     {
         Data = new ECM2Data(
-                    characterMovement.position,
-                    characterMovement.rotation,
                     characterMovement.velocity,
                     characterMovement.constrainToGround,
                     characterMovement.unconstrainedTimer,
