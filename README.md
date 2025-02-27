@@ -8,3 +8,5 @@ Requirements:
 The character movement code is the same as the networked demo included in ECM2.
 
 Use the included CharacterMovementNetick.cs instead of CharacterMovement.cs for Sandbox functionality.
+
+![image](https://github.com/user-attachments/assets/ba6bfe1c-ed88-4cab-af78-40402d195de8)
